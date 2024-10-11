@@ -10,13 +10,13 @@ interface Card {
 
 interface CardState {
   cards: Card[]
-  loading: boolean
+  isLoading: boolean
   error: string | null
 }
 
 const initialState: CardState = {
   cards: [],
-  loading: false,
+  isLoading: false,
   error: null,
 }
 
@@ -29,14 +29,14 @@ const cardSlice = createSlice({
     },
     setCards: (state, action: PayloadAction<Card[]>) => {
       state.cards = action.payload
-      state.loading = false
+      // state.loading = false
       state.error = null
     },
-    setLoading: (state) => {
-      state.loading = true
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
     },
     setError: (state, action: PayloadAction<string>) => {
-      state.loading = false
+      state.isLoading = false
       state.error = action.payload
     },
   },

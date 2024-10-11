@@ -2,11 +2,7 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { colors } from '../theme'
 
-interface IBackgroundShapesProps {
-  children: React.ReactNode
-}
-
-const BackgroundShapes = ({ children }: IBackgroundShapesProps) => {
+const Background = () => {
   const shapes = [
     { rotation: '-39.93deg', position: { top: '82%', left: '38%' } },
     { rotation: '144.57deg', position: { top: '-11%', right: '34%' } },
@@ -19,22 +15,18 @@ const BackgroundShapes = ({ children }: IBackgroundShapesProps) => {
           key={index}
           style={[
             styles.shape,
-            {
-              transform: [{ rotate: shape.rotation }],
-              ...shape.position,
-            },
+            shape.position,
+            { transform: [{ rotate: shape.rotation }] },
           ]}
         />
       ))}
-      <View style={styles.contentContainer}>{children}</View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    position: 'relative',
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: colors.blueDark,
   },
   shape: {
@@ -46,9 +38,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 349.21,
   },
-  contentContainer: {
-    flex: 1,
-  },
 })
 
-export default BackgroundShapes
+export default Background

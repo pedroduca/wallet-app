@@ -23,12 +23,17 @@ export const registerCard =
 
 export const getCards = () => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setLoading())
+    dispatch(setLoading(true))
+
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
     const response = await APIBase.get('/cards')
     const cards = response.data
 
     dispatch(setCards(cards))
+    dispatch(setLoading(false))
   } catch (error) {
     console.error('Erro ao buscar os cartões:', error)
+    dispatch(setLoading(false))
   }
 }

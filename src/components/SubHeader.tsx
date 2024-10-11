@@ -1,21 +1,16 @@
 import React from 'react'
-import { Animated, StyleSheet, Text } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 import { colors, typography } from '@/theme'
 
 interface SubHeaderProps {
   title: string
-  animationValue: Animated.Value
 }
 
-const SubHeader = ({ title, animationValue }: SubHeaderProps) => {
-  const animatedStyle = {
-    transform: [{ translateY: animationValue }],
-  }
-
+const SubHeader = ({ title }: SubHeaderProps) => {
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
+    <View style={[styles.container]}>
       <Text style={styles.title}>{title}</Text>
-    </Animated.View>
+    </View>
   )
 }
 

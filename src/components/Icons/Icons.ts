@@ -16,7 +16,7 @@ const Icons = [
   },
   {
     icon: 'WalletIcon',
-    func: require('assets/icons/icons8-old-time-camera.js'),
+    func: require('assets/icons/iconoir-apple-wallet.js'),
   },
 ] as { icon: IconsType; func: any }[]
 

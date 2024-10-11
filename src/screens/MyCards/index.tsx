@@ -18,6 +18,7 @@ import Header from '@/components/Header'
 import SubHeader from '@/components/SubHeader'
 import AnimatedCard from '@/components/AnimatedCard'
 import Button from '@/components/Button'
+import LoadingScreen from '@/components/Loading'
 import {
   useSharedValue,
   useAnimatedReaction,
@@ -31,13 +32,13 @@ const MyCards = () => {
   const dispatch = useDispatch()
   const insets = useSafeAreaInsets()
 
-  const { cards } = useSelector((state: RootState) => state.card)
+  const { cards, isLoading } = useSelector((state: RootState) => state.card)
+
   const selectedCardIndex = useSharedValue<number | null>(null)
 
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null)
 
   const subHeaderAnim = useRef(new Animated.Value(-50)).current
-
   useEffect(() => {
     dispatch(getCards())
     animateSubHeader()
@@ -68,6 +69,10 @@ const MyCards = () => {
   }
 
   const buttonPositionY = calculateButtonPosition()
+
+  if (isLoading) {
+    return <LoadingScreen />
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -117,7 +122,7 @@ const MyCards = () => {
             )}
           </>
         ) : (
-          <View styles={styles.noCardsContainer}>
+          <View style={styles.noCardsContainer}>
             <Text style={styles.noCardsText}>Sem cartões para usar</Text>
           </View>
         )}
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(29, 53, 87, 0.5)',
+    backgroundColor: 'rgba(20, 41, 149, 0.5)',
   },
 })
 
