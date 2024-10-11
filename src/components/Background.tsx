@@ -13,36 +13,41 @@ const BackgroundShapes = ({ children }: IBackgroundShapesProps) => {
   ]
 
   return (
-    <View style={styles.backgroundContainer}>
+    <View style={styles.container}>
       {shapes.map((shape, index) => (
         <View
           key={index}
           style={[
             styles.shape,
-            { transform: [{ rotate: shape.rotation }], ...shape.position },
+            {
+              transform: [{ rotate: shape.rotation }],
+              ...shape.position,
+            },
           ]}
         />
       ))}
-      {children}
+      <View style={styles.contentContainer}>{children}</View>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  backgroundContainer: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    overflow: 'hidden',
+  container: {
+    flex: 1,
+    position: 'relative',
+    backgroundColor: colors.blueDark,
   },
   shape: {
-    width: 349.21,
-    height: 235.27,
     backgroundColor: colors.greyLight,
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
+    height: 235.27,
     opacity: 0.2,
     position: 'absolute',
+    width: 349.21,
+  },
+  contentContainer: {
+    flex: 1,
   },
 })
 

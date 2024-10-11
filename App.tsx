@@ -8,11 +8,10 @@ import {
   PTSans_700Bold,
   useFonts,
 } from '@expo-google-fonts/pt-sans'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 import Routes from './src/routes'
 import { store } from './src/store'
-import { colors } from './src/theme'
 
 SplashScreen.preventAutoHideAsync()
 
@@ -33,15 +32,12 @@ export default function App() {
   }
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView
-        style={{ flex: 1, backgroundColor: colors.blueDark }}
-        onLayout={onLayoutRootView}
-      >
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
+      <SafeAreaProvider>
         <Provider store={store}>
           <Routes />
         </Provider>
-      </SafeAreaView>
+      </SafeAreaProvider>
     </GestureHandlerRootView>
   )
 }

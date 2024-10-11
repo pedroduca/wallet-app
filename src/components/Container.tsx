@@ -1,5 +1,5 @@
 import React, { memo } from 'react'
-import { ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native'
+import { ScrollView, SafeAreaView, StyleSheet } from 'react-native'
 
 import { colors } from '../theme'
 import BackgroundShapes from './Background'
@@ -7,20 +7,17 @@ import BackgroundShapes from './Background'
 interface IContainerProps {
   children: React.ReactNode
   backgroundColor?: string
-  statusBarColor?: string
   paddingHorizontal?: number
 }
 
 const Container = ({
   children,
   backgroundColor = colors.blueDark,
-  statusBarColor = colors.blueDark,
   paddingHorizontal = 20,
 }: IContainerProps): JSX.Element => {
   return (
     <BackgroundShapes>
       <SafeAreaView style={[styles.safeArea, { backgroundColor }]}>
-        <StatusBar translucent backgroundColor={statusBarColor} />
         <ScrollView
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}

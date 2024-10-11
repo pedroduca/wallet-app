@@ -68,35 +68,35 @@ const Button: React.FC<ButtonProps> = ({
 }
 
 const styles = StyleSheet.create({
-  primaryButton: {
-    backgroundColor: colors.blueLight,
-    padding: 16,
-    borderRadius: 8,
+  disabledButton: {
     alignItems: 'center',
+    backgroundColor: colors.greyLight,
+    borderRadius: 8,
+    padding: 16,
+  },
+  disabledText: {
+    ...typography.p,
+    color: colors.grey,
+  },
+  primaryButton: {
+    alignItems: 'center',
+    backgroundColor: colors.blueLight,
+    borderRadius: 8,
+    padding: 16,
   },
   primaryText: {
     ...typography.p,
     color: colors.white,
   },
   secondaryButton: {
-    backgroundColor: colors.greenLight,
-    padding: 16,
-    borderRadius: 8,
     alignItems: 'center',
+    backgroundColor: colors.greenLight,
+    borderRadius: 8,
+    padding: 16,
   },
   secondaryText: {
     ...typography.p,
     color: colors.blueDark,
-  },
-  disabledButton: {
-    backgroundColor: colors.greyLight,
-    padding: 16,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  disabledText: {
-    ...typography.p,
-    color: colors.grey,
   },
 })
 

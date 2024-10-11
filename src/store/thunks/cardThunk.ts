@@ -1,13 +1,14 @@
 import { AppDispatch } from '../store'
 import { APIBase } from '@/api'
-import { setCards, setLoading, setError } from '../slices/cardSlice'
+import { addCard, setCards, setLoading } from '../slices/cardSlice'
 
 export const registerCard =
   (cardData: {
-    number: number
-    cvv: number
+    number: string
+    cvv: string
     name: string
     expiryDate: string
+    type: string
   }) =>
   async (dispatch: AppDispatch) => {
     try {
@@ -27,7 +28,7 @@ export const getCards = () => async (dispatch: AppDispatch) => {
     const cards = response.data
 
     dispatch(setCards(cards))
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao buscar os cartões:', error)
   }
 }

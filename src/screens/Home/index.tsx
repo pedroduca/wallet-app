@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { StyleSheet, View, Animated } from 'react-native'
+import { StyleSheet, View, Animated, StatusBar } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 
 import { colors, typography } from '@/theme'
@@ -24,7 +24,9 @@ const Home = () => {
   }, [])
 
   return (
-    <Container>
+    <Container backgroundColor={colors.blueDark}>
+      <StatusBar backgroundColor={colors.blueDark} barStyle="light-content" />
+
       {currentView === 'home' && (
         <View style={styles.walletHomeContainer}>
           <Animated.Text
