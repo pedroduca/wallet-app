@@ -1,16 +1,17 @@
 module.exports = {
+  root: true,
   parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'react', 'prettier'],
   env: {
     browser: true,
     es2021: true,
     node: true,
   },
   extends: [
-    'prettier',
     'eslint:recommended',
-    'plugin:prettier/recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -19,39 +20,27 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'react', 'prettier'],
   rules: {
-    semi: ['error', 'never'],
     'prettier/prettier': 'error',
-    'import/no-unresolved': 'error',
-    'no-unused-vars': [
-      'error',
-      { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
-    ],
-    'no-var': ['error'],
+    'react/react-in-jsx-scope': 'off',
+    '@typescript-eslint/no-unused-vars': ['error'],
+    'no-unused-vars': 'off',
+    'no-var': 'error',
+    semi: ['error', 'never'],
+    'import/no-unresolved': 'off',
+    'react/prop-types': 'off',
   },
   settings: {
     react: {
       version: 'detect',
     },
-    'import/parsers': {
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
-    },
-    'import/resolver': {
-      typescript: {
-        project: ['tsconfig.base.json'],
-      },
-      node: {
-        project: ['tsconfig.base.json'],
-      },
-    },
   },
   overrides: [
     {
+      files: ['.eslintrc.{js,cjs}'],
       env: {
         node: true,
       },
-      files: ['.eslintrc.{js,cjs}'],
       parserOptions: {
         sourceType: 'script',
       },
