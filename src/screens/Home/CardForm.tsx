@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, StyleSheet, ScrollView } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { useDispatch } from 'react-redux'
 import Input from '@/components/Input'
 import Button from '@/components/Button'
@@ -23,7 +23,7 @@ const CardForm = ({ setShowNextView }: ICardForm) => {
 
   const [cvvMask, setCvvMask] = useState('')
   const [form, setForm] = useState<FormState>({
-    cardNumber: 0,
+    cardNumber: '',
     cardHolder: '',
     expiryDate: '',
     cvv: '',
@@ -94,13 +94,7 @@ const CardForm = ({ setShowNextView }: ICardForm) => {
           onChangeText: (name) => handleInputChange('cardHolder', name),
         }}
       />
-      <View
-        style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}
-      >
+      <View style={styles.row}>
         <Input
           label="vencimento"
           placeholder="00/00"
@@ -134,8 +128,14 @@ const CardForm = ({ setShowNextView }: ICardForm) => {
 const styles = StyleSheet.create({
   formContainer: {
     width: '100%',
-
     gap: 10,
+    justifyContent: 'center',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
   },
 })
 

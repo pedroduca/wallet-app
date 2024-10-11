@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
 import { ScrollView, SafeAreaView, StyleSheet, StatusBar } from 'react-native'
-import Background from './Background'
 
-import { IS_ANDROID, STATUSBAR_HEIGHT } from '../utils/device'
 import { colors } from '../theme'
+import BackgroundShapes from './Background'
 
 interface IContainerProps {
   children: React.ReactNode
@@ -19,40 +18,28 @@ const Container = ({
   paddingHorizontal = 20,
 }: IContainerProps): JSX.Element => {
   return (
-    <Background>
-      <StatusBar translucent backgroundColor={statusBarColor} />
-
-      <SafeAreaView
-        style={[
-          styles.safeArea,
-          {
-            backgroundColor: backgroundColor ? backgroundColor : 'transparent',
-          },
-        ]}
-      />
-
-      <ScrollView
-        scrollEnabled={false}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={[
-          styles.scrollViewContent,
-          { paddingHorizontal },
-        ]}
-        style={{ backgroundColor }}
-      >
-        {children}
-      </ScrollView>
-    </Background>
+    <BackgroundShapes>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor }]}>
+        <StatusBar translucent backgroundColor={statusBarColor} />
+        <ScrollView
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={[
+            styles.scrollViewContent,
+            { paddingHorizontal },
+          ]}
+          style={{ backgroundColor }}
+        >
+          {children}
+        </ScrollView>
+      </SafeAreaView>
+    </BackgroundShapes>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    // flex: 1,
-    // position: 'relative',
-  },
   safeArea: {
-    paddingTop: IS_ANDROID ? STATUSBAR_HEIGHT * 4 : 0,
+    flex: 1,
   },
   scrollViewContent: {
     flexGrow: 1,

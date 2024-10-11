@@ -1,157 +1,101 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { StyleSheet, View, Animated, Text } from 'react-native'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/index'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useCallback, useState } from 'react'
+import { StyleSheet, View, Animated } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import { colors, typography } from '@/theme'
-
 import Button from '@/components/Button'
 import Container from '@/components/Container'
 import Header from '@/components/Header'
-import Card from '@/components/Card'
-
 import CardForm from './CardForm'
+import CardRegistered from './CardRegistered'
+import useTitleAnimation from '@/hooks/useTitleAnimation'
 
-const Home = (params) => {
+const Home = () => {
   const navigation = useNavigation()
 
-  const [showInputs, setShowInputs] = useState()
-
-  const [showNextView, setShowNextView] = useState(false)
-
-  const bounceAnim = useRef(new Animated.Value(0)).current
-
-  const cards = useSelector((state: RootState) => state.card.cards)
-  const lastCard = cards[cards.length - 1]
-
-  const handleRegisterCardPress = () => {
-    setShowInputs(true)
-    Animated.spring(bounceAnim, {
-      toValue: -50,
-      friction: 2,
-      useNativeDriver: true,
-    }).start()
-  }
-
-  const handleMyCardsPress = () => {
-    navigation.navigate('MyCards')
-  }
-
-  useEffect(() => {
-    if (showNextView) {
-      Animated.spring(bounceAnim, {
-        toValue: -30,
-        friction: 2,
-        useNativeDriver: true,
-      }).start()
-    }
-  }, [showNextView])
-
-  useFocusEffect(
-    React.useCallback(() => {
-      setShowInputs(params.route.params?.showInputs)
-    }, [params.route.params?.showInputs])
+  const [currentView, setCurrentView] = useState<'home' | 'input' | 'success'>(
+    'home'
   )
+
+  const bounceAnim = useTitleAnimation(currentView)
+
+  const handleRegisterCardPress = useCallback(() => {
+    setCurrentView('input')
+  }, [])
 
   return (
     <Container>
-      <View style={styles.walletHomeContainer}>
-        <View style={styles.contentContainer}>
+      {currentView === 'home' && (
+        <View style={styles.walletHomeContainer}>
           <Animated.Text
             style={[styles.title, { transform: [{ translateY: bounceAnim }] }]}
           >
             Wallet Test
           </Animated.Text>
-          {showInputs ? (
-            showNextView ? (
-              // TODO: Mover para um arquivo separado
-              <>
-                <Header
-                  title="cadastro"
-                  onBackPress={() => setShowNextView(false)}
-                />
-                <View style={styles.cardContainer}>
-                  <Text style={styles.cardMessage}>
-                    cartão cadastrado com sucesso
-                  </Text>
-                  <Card
-                    type={lastCard.type}
-                    name={lastCard.name}
-                    cardNumber={lastCard.number}
-                    validity={lastCard.expiryDate}
-                  />
-                </View>
-                <View style={{ width: '100%', padding: 16 }}>
-                  <Button
-                    title="Avançar"
-                    onPress={(() => setShowNextView(false), handleMyCardsPress)}
-                  />
-                </View>
-              </>
-            ) : (
-              <>
-                <Header
-                  title="cadastro"
-                  onBackPress={() => setShowInputs(false)}
-                />
-                <CardForm setShowNextView={setShowNextView} />
-              </>
-            )
-          ) : (
-            <View style={styles.buttonContainer}>
-              <Button
-                title="Meus Cartões"
-                onPress={handleMyCardsPress}
-                variant="primary"
-              />
-              <Button
-                title="Cadastrar Cartão"
-                onPress={handleRegisterCardPress}
-                variant="secondary"
-              />
-            </View>
-          )}
+          <View style={styles.buttonContainer}>
+            <Button
+              title="Meus Cartões"
+              onPress={() => navigation.navigate('MyCards')}
+              variant="primary"
+            />
+            <Button
+              title="Cadastrar Cartão"
+              onPress={handleRegisterCardPress}
+              variant="secondary"
+            />
+          </View>
         </View>
-      </View>
+      )}
+      {(currentView === 'input' || currentView === 'success') && (
+        <>
+          <Header
+            title="cadastro"
+            onBackPress={() =>
+              setCurrentView(currentView === 'input' ? 'home' : 'input')
+            }
+          />
+          <View style={styles.contentContainer}>
+            <Animated.Text
+              style={[
+                styles.title,
+                { transform: [{ translateY: bounceAnim }] },
+              ]}
+            >
+              Wallet Test
+            </Animated.Text>
+            {currentView === 'input' ? (
+              <CardForm setShowNextView={() => setCurrentView('success')} />
+            ) : (
+              <CardRegistered setCurrentView={setCurrentView} />
+            )}
+          </View>
+        </>
+      )}
     </Container>
   )
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  walletHomeContainer: {
+    flex: 1,
     padding: 16,
-    gap: 20,
-    width: '100%',
-    alignItems: 'center',
-  },
-  title: {
-    ...typography.h1,
-    textAlign: 'center',
-    color: colors.white,
+    justifyContent: 'center',
   },
   contentContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    paddingHorizontal: 16,
   },
-  walletHomeContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: colors.blueDark,
-  },
-  inputContainer: {
-    width: '100%',
-    gap: 10,
-  },
-  cardMessage: {
-    ...typography.h4,
+  title: {
+    ...typography.h1,
     color: colors.white,
+    textAlign: 'center',
+    marginBottom: 40,
   },
-  cardContainer: {
+  buttonContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 30,
+    gap: 20,
+    padding: 16,
   },
 })
 

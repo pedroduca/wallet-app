@@ -31,24 +31,20 @@ const Header = ({
 
 const styles = StyleSheet.create({
   headerContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    zIndex: 10,
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
+    height: 66,
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    height: 50,
+    zIndex: 10,
+  },
+  headerRightSpace: {
+    width: 32,
   },
   headerTitle: {
     ...typography.h3,
     color: colors.blueLight,
     textAlign: 'center',
-  },
-  headerRightSpace: {
-    width: 32,
   },
 })
 

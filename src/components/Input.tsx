@@ -36,9 +36,7 @@ const Input = (props: InputProps) => {
 
   return (
     <View style={styles.container}>
-      {params.label !== '' && (
-        <Text style={[styles.label]}>{params.label}</Text>
-      )}
+      {params.label !== '' && <Text style={styles.label}>{params.label}</Text>}
       <View style={styles.containerTextField}>
         {params.iconLeft && (
           <Pressable
@@ -76,29 +74,29 @@ const Input = (props: InputProps) => {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, margin: 6 },
+  container: { flex: 1, marginVertical: 6 },
+  containerTextField: {
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderColor: colors.greyLight,
+    borderRadius: 6,
+    borderWidth: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 16,
+  },
+  input: {
+    ...typography.p,
+    color: colors.black,
+    flex: 1,
+    height: 45,
+    minHeight: 45,
+  },
   label: {
     ...typography.pSmall,
     color: colors.white, //Deveria ser grey, mas acho que talvez tenha tido confusão no figma?
     marginBottom: 4,
     minHeight: 25,
-  },
-  containerTextField: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderColor: colors.greyLight,
-    borderWidth: 1,
-    borderRadius: 6,
-    paddingLeft: 16,
-    backgroundColor: colors.white,
-  },
-  input: {
-    ...typography.p,
-    flex: 1,
-    minHeight: 45,
-    height: 45,
-    color: colors.black,
   },
 })
 
